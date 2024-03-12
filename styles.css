@@ -1,0 +1,45 @@
+/* Body Styles */
+
+body {
+    background-color: #ccc;
+}
+
+/* Dashboard Styles */
+
+#dashHeading {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    font-size: 4em;
+    background-color: #bcbcbc;
+}
+
+#tableName,
+#tableName:visited {
+    list-style: none;
+    display: block;
+    text-decoration: none;
+}
+
+#tableName a {
+    display: block;
+    background-color: aquamarine;
+    border: 1px solid black;
+    border-radius: 25px;
+    margin: 25px;
+    padding: 15px;
+    text-align: center;
+    font-size: 3em;
+}
+
+#tableName a:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Table Styles */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
