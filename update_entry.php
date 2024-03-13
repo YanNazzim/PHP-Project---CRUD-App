@@ -16,19 +16,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Construct the update query based on form data
     $updateQuery = "UPDATE $tableName SET ";
     foreach ($_POST as $column => $value) {
-        if ($column !== 'id' && $column !== 'table') {
+        if ($column !== 'id' && $column !== 'table' && $column !== 'last_edited') {
             $updateQuery .= "$column = '$value', ";
         }
     }
-    $updateQuery = rtrim($updateQuery, ', ') . " WHERE id = $entryId";
-
+    $updateQuery .= "last_edited = CURRENT_TIMESTAMP ";
+    $updateQuery .= "WHERE id = $entryId";
     // Execute the update query
     $result = $db->exec($updateQuery);
 
+    // Check if the entry was updated successfully
     if ($result) {
-        echo '<p>Entry updated successfully.</p>';
+        echo '<script>';
+        echo 'alert("Entry updated successfully.");';
+        echo 'window.location.href = "display_table.php?table=' . $tableName . '";';
+        echo '</script>';
+        exit();
     } else {
-        echo '<p>Error updating entry.</p>';
+        echo '<script>';
+        echo 'alert("Error updating entry.");';
+        echo 'window.location.href = document.referrer;';
+        echo '</script>';
+        exit();
     }
 } else {
     echo '<p>Form not submitted.</p>';
@@ -36,4 +45,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Close the database connection
 $database->closeDB();
-?>

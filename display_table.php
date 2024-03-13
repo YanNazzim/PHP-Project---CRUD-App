@@ -10,7 +10,6 @@
 
 <body>
 
-
     <?php
     require_once 'db.php';
 
@@ -20,6 +19,7 @@
     // Get the database connection
     $db = $database->getDB();
 
+    // Back to Dashboard Button
     echo '<a href="../project/index.php"><input type="button" value="Back to Dashboard"></a>';
 
     // Check if the 'table' parameter is set in the URL
@@ -27,7 +27,7 @@
         $tableName = $_GET['table'];
 
         // Add an "Add" button above the table
-        echo '<button id="addButton">Add</button>';
+        echo '<button id="addButton" onclick="openAddForm()">Add</button>';
 
         // Fetch all rows from the specified table
         $result = $db->query("SELECT * FROM $tableName");
@@ -40,15 +40,20 @@
             // Output table header
             echo '<tr>';
             for ($i = 0; $i < $result->numColumns(); $i++) {
-                echo '<th style="font-size: 16pt; padding: 10px; border: 3px solid black;">' . $result->columnName($i) . '</th>';
+                // Use conditional statement to apply different styles for odd and even headers
+                $style = ($i % 2 == 0) ? 'style="font-size: 16pt; padding: 10px; border: 3px solid black; background-color: gray; color: white;"' : 'style="font-size: 16pt; padding: 10px; border: 3px solid black; background-color: gray; color: white;"';
+                echo '<th ' . $style . '>' . $result->columnName($i) . '</th>';
             }
             // Add an additional column for actions
-            echo '<th style="border: 3px solid black; font-size: 16pt; font-weight: bolder;">Actions</th>';
+            echo '<th style="border: 3px solid black; font-size: 16pt; font-weight: bolder; background-color: gray; color: white;">Actions</th>';
             echo '</tr>';
 
             // Output table rows
+            $rowNumber = 0; // Counter for alternating row styles
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                echo '<tr>';
+                // Use conditional statement to apply different styles for odd and even rows
+                $rowStyle = ($rowNumber++ % 2 == 0) ? 'style="background-color: #ccc;"' : 'style="background-color: white;"';
+                echo '<tr ' . $rowStyle . '>';
                 foreach ($row as $value) {
                     echo '<td style="font-size: 14pt; padding: 10px; text-align: center; border: 3px solid black; font-weight: bolder;">' . $value . '</td>';
                 }
@@ -57,7 +62,7 @@
                 $idColumnExists = isset($row['id']);
 
                 // Add edit and delete buttons for each row
-                echo '<td <td style="font-size: 14pt; padding: 10px; text-align: center; border: 3px solid black; font-weight: bolder;">';
+                echo '<td style="font-size: 14pt; padding: 10px; text-align: center; border: 3px solid black; font-weight: bolder;">';
 
                 // Check if 'id' key exists before creating the Edit button
                 if ($idColumnExists) {
@@ -86,12 +91,29 @@
     $database->closeDB();
     ?>
 
+
+    <!-- Add this script at the end of your HTML body -->
     <script>
+        function openAddForm() {
+            // Redirect to the add_entry.php page with the table name
+            window.location.href = "add_entry.php?table=<?php echo $tableName; ?>";
+        }
+
         function confirmDelete(deleteUrl) {
             var confirmDelete = confirm("Are you sure you want to delete this entry?");
             if (confirmDelete) {
+                // Use AJAX to call the PHP script to update sqlite_sequence
+                updateSqliteSequence('<?php echo $tableName; ?>');
+                // Redirect to delete entry URL
                 window.location.href = deleteUrl;
             }
+        }
+
+        function updateSqliteSequence(tableName) {
+            // Use AJAX to call the PHP script to update sqlite_sequence
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'update_sqlite_sequence.php?table=' + tableName, true);
+            xhr.send();
         }
     </script>
 
