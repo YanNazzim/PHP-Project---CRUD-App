@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,6 +10,16 @@
 
 <body>
     <?php
+
+        // Back to Dashboard Button
+        echo '<a href="../project/index.php" style="text-decoration: none; padding: 10px 20px; background-color: #89CFF0; color: white; border-radius: 5px; transition: background-color 0.3s, transform 0.3s; display: inline-block; margin-top: 10px; cursor: pointer;" 
+        onmouseover="this.style.backgroundColor=\'#6BA8D0\'; this.style.transform=\'scale(1.05)\'" 
+        onmouseout="this.style.backgroundColor=\'#89CFF0\'; this.style.transform=\'scale(1)\'">
+        
+        <input type="button" value="Back to Dashboard" style="background: none; border: none; color: white; cursor: pointer; transition: transform 0.3s;">
+        
+        </a>';
+        
     require_once 'db.php';
 
     // Create a new instance of the Database class
@@ -30,15 +39,22 @@
         // Check if the entry exists
         if ($result) {
             $entryData = $result->fetchArray(SQLITE3_ASSOC);
+
             // Render the form with dynamic labels based on table headers
-            echo '<form action="update_entry.php" method="post">';
+            echo '<form action="update_entry.php" method="post" style="text-align: center; margin-top: 20px;">';
+            echo '<table style="margin: auto;">'; // Add table element
             foreach ($entryData as $column => $value) {
-                echo '<label for="' . $column . '">' . $column . '</label>';
-                echo '<input type="text" name="' . $column . '" value="' . $value . '">';
+                echo '<tr>'; // Start a new table row
+                echo '<td><label for="' . $column . '" style="display: block; margin-top: 10px; color:black;">' . $column . '</label></td>';
+                echo '<td><input type="text" name="' . $column . '" value="' . $value . '" style="margin-bottom: 10px; padding: 5px;"></td>';
+                echo '</tr>'; // End the table row
             }
+            echo '</table>'; // End the table element
             echo '<input type="hidden" name="id" value="' . $entryId . '">';
             echo '<input type="hidden" name="table" value="' . $tableName . '">';
-            echo '<input type="submit" value="Update">';
+            echo '<input type="submit" value="Update" style="font-size: 3em; font-weight:bolder; background-color: #8FED92; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;" 
+        onmouseover="this.style.backgroundColor=\'#7ED482\'; this.style.transform=\'scale(1.05)\'" 
+        onmouseout="this.style.backgroundColor=\'#8FED92\'; this.style.transform=\'scale(1)\'">';
             echo '</form>';
         } else {
             echo '<p>Error fetching entry data.</p>';

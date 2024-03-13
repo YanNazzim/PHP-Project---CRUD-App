@@ -20,21 +20,31 @@
     $db = $database->getDB();
 
     // Back to Dashboard Button
-    echo '<a href="../project/index.php"><input type="button" value="Back to Dashboard"></a>';
+    echo '<a href="../project/index.php" style="text-decoration: none; padding: 10px 20px; background-color: #89CFF0; color: white; border-radius: 5px; transition: background-color 0.3s, transform 0.3s; display: inline-block; margin-top: 10px; cursor: pointer;" 
+    onmouseover="this.style.backgroundColor=\'#6BA8D0\'; this.style.transform=\'scale(1.05)\'" 
+    onmouseout="this.style.backgroundColor=\'#89CFF0\'; this.style.transform=\'scale(1)\'">
+    
+    <input type="button" value="Back to Dashboard" style="background: none; border: none; color: white; cursor: pointer; transition: transform 0.3s;">
+    
+    </a>';
+
+
 
     // Check if the 'table' parameter is set in the URL
     if (isset($_GET['table'])) {
         $tableName = $_GET['table'];
 
         // Add an "Add" button above the table
-        echo '<button id="addButton" onclick="openAddForm()">Add</button>';
+        echo '<button id="addButton" onclick="openAddForm()" style="background-color: #8FED92; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s, transform 0.3s;" 
+        onmouseover="this.style.backgroundColor=\'#7ED482\'; this.style.transform=\'scale(1.05)\'" 
+        onmouseout="this.style.backgroundColor=\'#8FED92\'; this.style.transform=\'scale(1)\'">Add</button>';
 
         // Fetch all rows from the specified table
         $result = $db->query("SELECT * FROM $tableName");
 
         // Check if there are rows in the result
         if ($result) {
-            echo '<h2>Table: ' . $tableName . '</h2>';
+            echo '<h2 class="tableNameH2" style="color:white;">Table: ' . $tableName . '</h2>';
             echo '<table border="1" style="width: 98vw; max-width: 98vw;">';
 
             // Output table header
@@ -67,7 +77,7 @@
                 // Check if 'id' key exists before creating the Edit button
                 if ($idColumnExists) {
                     $editUrl = "edit_entry.php?table=$tableName&id=" . $row['id'];
-                    echo '<a href="' . $editUrl . '"><button>Edit</button></a>';
+                    echo '<a href="' . $editUrl . '"><button class="edit-btn">Edit</button></a>';
                 }
 
                 // Add delete button for each row
@@ -75,7 +85,6 @@
                 echo '<button class="delete-btn" onclick="confirmDelete(\'' . $deleteUrl . '\')">Delete</button>';
 
                 echo '</td>';
-                echo '</tr>';
             }
 
             echo '</table>';

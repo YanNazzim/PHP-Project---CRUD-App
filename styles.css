@@ -1,7 +1,6 @@
 /* Body Styles */
-
 body {
-    background-color: #b45858;
+    background-color: #ccc;
 }
 
 /* Dashboard Styles */
@@ -11,7 +10,17 @@ body {
     width: 100%;
     text-align: center;
     font-size: 4em;
-    background-color: #bcbcbc;
+    background-color: #5a5a5a;
+    color: white;
+}
+
+.tableNameH2 {
+    display: block!important;
+    width: 100%;
+    text-align: center;
+    font-size: 4em;
+    background-color: #5a5a5a;
+    color: white;
 }
 
 #tableName,
@@ -23,13 +32,14 @@ body {
 
 #tableName a {
     display: block;
-    background-color:#5a5a5a;
+    background-color: #5a5a5a;
     border: 3px solid black;
     border-radius: 25px;
     margin: 25px;
     padding: 15px;
     text-align: center;
     font-size: 3em;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 #tableName a:hover {
@@ -42,4 +52,106 @@ body {
 table {
     border-collapse: collapse;
     width: 100%;
+}
+
+/* Add Entry Page Styles */
+a.button {
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #89CFF0;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+a.button:hover {
+    background-color: #6BA8D0;
+    transform: scale(1.05);
+}
+
+h2.tableNameH2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+button#addButton {
+    background-color: #8FED92;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin-top: 20px;
+}
+
+button#addButton:hover {
+    background-color: #7ED482;
+    transform: scale(1.05);
+}
+
+table {
+    width: 98vw;
+    max-width: 98vw;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 3px solid black;
+    font-size: 16pt;
+    text-align: center;
+}
+
+th {
+    background-color: gray;
+    color: white;
+    font-weight: bolder;
+}
+
+tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+.delete-btn {
+    background-color: #FF6F61;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #E9573F;
+    transform: scale(1.05);
+}
+
+.edit-btn {
+    background-color: #89CFF0;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #6BA8D0;
+    transform: scale(1.05);
+}
+a.button,
+.edit-btn {
+    color: black;
+    font-weight: bold;
 }
